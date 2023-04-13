@@ -19,7 +19,6 @@ private:
     Shape shape;
     Number number;
 public:
-    Card(){}
     Card(Number num , Shape str);
     Shape getShape();
 	Number getNumber();

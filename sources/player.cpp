@@ -3,11 +3,12 @@ using namespace ariel;
 #include <string>
 
 namespace ariel {
-    // vector <Card> player_pack;
+    
     Player::Player(string str)  {
         this->name = str;  
         this->cardes_Taken = 0;
         this->wins_counter = 0;
+        this->status = false;
     }
 
 
@@ -15,6 +16,14 @@ namespace ariel {
         Card c = pack[size_t(pack.size()-1)];
         pack.pop_back();
         return c;
+    }
+
+    bool Player::getStatus(){
+        return status;
+    }
+
+    void Player::setStatus(){
+        status = !status;
     }
 
     void Player::setCard(Card c){
@@ -31,8 +40,14 @@ namespace ariel {
         return wins_counter;
     }
     void Player::setCardesTaken(){
-        cardes_Taken += 1;
+        cardes_Taken += 2;
+        cout << getName() << " - " << cardes_Taken << endl;
     }
+
+    void Player::setCardesTaken_byValue(int num){
+        cardes_Taken += num;
+    }
+
     int Player::cardesTaken() {
         return cardes_Taken;
     }

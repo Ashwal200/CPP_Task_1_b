@@ -21,10 +21,10 @@ private:
     vector <Card> pack; 
     int cardes_Taken;
     int wins_counter;
+    bool status;
 public:
     
     // constructor
-    Player(){}
     Player(string str);
     Card getCard();
     void setCard(Card c);
@@ -34,6 +34,9 @@ public:
     int getWins_counter(); 
     void setWins_counter();
     void setCardesTaken();
+    void setCardesTaken_byValue(int num);
+    bool getStatus();
+    void setStatus();
 };
 
 

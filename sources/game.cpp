@@ -15,21 +15,42 @@ using namespace std;
 using namespace ariel;
 
 namespace ariel{
+    int static flage = 0;
     Shape shape_arr[4] = {club, diamond, heart, spade };
 	Number number_arr[14] = {two, three, four, five, six, seven, eight, nine, ten, jack, queen, king, ace};
     // constructor
     Game::Game(Player& p1 , Player& p2) : player1(p1) , player2(p2) 
     {
-        flage = 1;
+
+        if(player1.getStatus() || player2.getStatus())
+        {
+            throw invalid_argument("Can't play on two games concurrency");
+        }
+
+
+        setFlage();
         play_flage = true;
+        player1.setStatus();
+        player2.setStatus();
         create_pack();
 
         split_pack();
 
-        // for( int i = 0 ; i < player2.stacksize() ; i++){
-        //     cout << i << " - number : " << player2.getCard().getNumber() << " , type : " << player2.getCard().getShape() << endl;
-        // }
+        cout <<  " - number : " << player2.stacksize() << " , type : " << player2.stacksize() << endl;
+
         
+    }
+
+    void Game::setFlage(){
+        flage = 1;
+    }
+
+    void Game::addFlage(){
+        flage += 2;
+    }
+
+    int Game::getFlage(){
+        return flage;
     }
 
     void Game::create_pack(){
@@ -75,88 +96,111 @@ namespace ariel{
 
     void Game::playTurn()
     {
+        if (player1.stacksize() == 0 || player2.stacksize() == 0){
+            throw logic_error("The pack need to be with cards !");
+            return;
+        }
+
         if (player1.stacksize() == 1)
         {
             play_flage = false;
         }
         
-        if (player1.stacksize() == 0 || player2.stacksize() == 0){
-            play_flage = false;
-            throw logic_error("The pack need to be with cards !");
-        }
+
         if (&player1 == &player2){
             throw logic_error("The player's need to be differents !");
+            return;
         }
         Card player_1_card = player1.getCard();
         Card player_2_card = player2.getCard();
         
         log.push_back(pair<Card, Card>(player_1_card, player_2_card));
         
-        int num_of_1_card = player1.getCard().getNumber();
-        int num_of_2_card = player2.getCard().getNumber();
+        int num_of_1_card = player_1_card.getNumber();
+        int num_of_2_card = player_2_card.getNumber();
 
 
-        if (num_of_1_card < num_of_2_card)
+        if (num_of_1_card == 14 && num_of_2_card == 2)
         {
-            for (int i = 0; i < 2*flage; i++)
+            for (int i = 0; i < getFlage(); i++)
             {
                 player2.setCardesTaken();
                 player2.setWins_counter();
             }
-            flage = 1;
+            setFlage();
         }
 
-        if (num_of_1_card > num_of_2_card)
+        if (num_of_2_card == 14 && num_of_1_card == 2)
         {
-            for (int i = 0; i < 2*flage; i++)
+            for (int i = 0; i < getFlage(); i++)
             {
                 player1.setCardesTaken();
                 player1.setWins_counter();
             }
-            flage = 1;
+            setFlage();
+        }
+        
+        if (num_of_1_card < num_of_2_card)
+        {
+            
+            for (int i = 0; i < getFlage(); i++)
+            {
+                //cout << i << endl;
+                player2.setCardesTaken();
+                player2.setWins_counter();
+            }
+            setFlage();
+        }
+
+        if (num_of_1_card > num_of_2_card)
+        {
+            for (int i = 0; i < getFlage(); i++)
+            {
+                // cout << i << endl;
+                player1.setCardesTaken();
+                player1.setWins_counter();
+            }
+            setFlage();
         }
         
         if (num_of_1_card == num_of_2_card && player1.stacksize() > 1)
         {
-            cout << "DRAW !" << endl;
+            
             // undercover card
             log.push_back(pair<Card, Card>(player1.getCard(), player2.getCard()));
 
-            cout << "DRAW !!" << endl;
-            flage += 2;
+            addFlage();
+
+            cout << "DRAW ! - " << getFlage() << endl;
 
             // card to fight
             playTurn();
 
         }
 
-        else if (num_of_1_card == num_of_2_card && player1.stacksize() == 0)
+        if (num_of_1_card == num_of_2_card && player1.stacksize() == 0)
         {
-            cout << "DRAW ! with 0" << endl;
-            for (int i = 0; i < flage; i++)
-            {
-                player1.cardesTaken();
-                player2.cardesTaken();
-            }
+            cout << "DRAW ! with 0 - " << getFlage() << endl;
+            int split = (getFlage() + 1)/2;
+            player1.setCardesTaken_byValue(split);
+            player2.setCardesTaken_byValue(split);
+
             play_flage = false;
             
         }
         
-        else if (num_of_1_card == num_of_2_card && player1.stacksize() == 1)
+        if (num_of_1_card == num_of_2_card && player1.stacksize() == 1)
         {
-            cout << "DRAW ! with 1" << endl;
-            for (int i = 0; i < flage; i++)
-            {
-                player1.cardesTaken();
-                player2.cardesTaken();
-            }
+            cout << "DRAW ! with 1 - " << getFlage() << endl;
+            int split = (getFlage() + 1 + 2)/2;
+            player1.setCardesTaken_byValue(split);
+            player2.setCardesTaken_byValue(split);
+
             player1.getCard();
             player2.getCard();
             play_flage = false;
             
         }
-
-        
         
     }
 
@@ -213,6 +257,9 @@ namespace ariel{
             playTurn();
         }        
 
+        player1.setStatus();
+        player2.setStatus();
+
     }
 
 
@@ -246,11 +293,13 @@ namespace ariel{
     
     void Game::printLog()
     {
+        int i = 1;
         while (log.size() > 0)
         {
             pair<Card, Card> turn = log[log.size() - 1];
-            cout << player1.getName() << " played "  << get_number_name(turn.first.getNumber()) << " of " << get_shape_name(turn.first.getShape()) << " ------ " << player2.getName() << " played "  << get_number_name(turn.second.getNumber()) << " of " << get_shape_name(turn.second.getShape()) << endl;
+            cout << i << " -- " << player1.getName() << " played "  << get_number_name(turn.first.getNumber()) << " of " << get_shape_name(turn.first.getShape()) << " ------ " << player2.getName() << " played "  << get_number_name(turn.second.getNumber()) << " of " << get_shape_name(turn.second.getShape()) << endl;
             log.pop_back();
+            i++;
         }
 
     }

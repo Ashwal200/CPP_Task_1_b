@@ -20,7 +20,6 @@ class Game
 private:
     Player& player1;
     Player& player2;
-    int flage;
     bool play_flage;
     vector<pair <Card, Card> > log;
     vector<Card> shuffle_pack; 
@@ -38,6 +37,9 @@ public:
     void printStats();
     string get_shape_name(int num);
     string get_number_name(int num);
+    int getFlage();
+    void setFlage();
+    void addFlage();
 };
 
 }
