@@ -41,7 +41,6 @@ namespace ariel {
     }
     void Player::setCardesTaken(){
         cardes_Taken += 2;
-        cout << getName() << " - " << cardes_Taken << endl;
     }
 
     void Player::setCardesTaken_byValue(int num){

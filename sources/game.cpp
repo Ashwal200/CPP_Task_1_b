@@ -306,7 +306,7 @@ namespace ariel{
     
     void Game::printStats()
     {
-        cout << "Game stats of " << player1.getName() << " :\n   win rate: " << player1.getWins_counter() <<"\n   cards won: "<< player1.cardesTaken() << endl;
+        cout << "Game stats of " << player1.getName() << " :\n   win rate: " << player1.getWins_counter() <<"\n   cards won: "<< player1.cardesTaken() << "\n" <<endl;
         cout << "Game stats of " << player2.getName() << " :\n   win rate: " << player2.getWins_counter() <<"\n   cards won: "<< player2.cardesTaken() << endl;
         cout << "The number of Draws is : " << draw_counter << endl;
     }
