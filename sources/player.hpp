@@ -16,6 +16,7 @@ namespace ariel{
 
 class Player
 {
+// Private members
 private:
     string name;
     vector <Card> pack; 
@@ -23,8 +24,6 @@ private:
     int wins_counter;
     bool status;
 public:
-    
-    // constructor
     Player(string str);
     Card getCard();
     void setCard(Card c);

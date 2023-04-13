@@ -15,7 +15,9 @@ namespace ariel{
         number = num;
         shape = str;
     }
+    // Return the value of the shape on the card
     Shape Card::getShape() { return shape; }
+    // Return the number on the card
 	Number Card::getNumber() { return number; }
 
 

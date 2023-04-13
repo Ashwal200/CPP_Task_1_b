@@ -17,6 +17,7 @@ namespace ariel{
 
 class Game
 {
+// private members
 private:
     Player& player1;
     Player& player2;
@@ -25,7 +26,6 @@ private:
     vector<Card> shuffle_pack; 
     int draw_counter;
 public:
-    // constructor
     Game(Player&, Player&);
     void shuffle_cards();
     void split_pack(); 
