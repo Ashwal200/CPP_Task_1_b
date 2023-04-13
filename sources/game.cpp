@@ -36,8 +36,6 @@ namespace ariel{
 
         split_pack();
 
-        cout <<  " - number : " << player2.stacksize() << " , type : " << player2.stacksize() << endl;
-
         
     }
 
@@ -130,7 +128,7 @@ namespace ariel{
             setFlage();
         }
 
-        if (num_of_2_card == 14 && num_of_1_card == 2)
+        else if (num_of_2_card == 14 && num_of_1_card == 2)
         {
             for (int i = 0; i < getFlage(); i++)
             {
@@ -140,9 +138,8 @@ namespace ariel{
             setFlage();
         }
         
-        if (num_of_1_card < num_of_2_card)
+        else if (num_of_1_card < num_of_2_card)
         {
-            
             for (int i = 0; i < getFlage(); i++)
             {
                 //cout << i << endl;
@@ -152,7 +149,7 @@ namespace ariel{
             setFlage();
         }
 
-        if (num_of_1_card > num_of_2_card)
+        else if (num_of_1_card > num_of_2_card)
         {
             for (int i = 0; i < getFlage(); i++)
             {
@@ -163,7 +160,7 @@ namespace ariel{
             setFlage();
         }
         
-        if (num_of_1_card == num_of_2_card && player1.stacksize() > 1)
+        else if (num_of_1_card == num_of_2_card && player1.stacksize() > 1)
         {
             
             // undercover card
@@ -178,7 +175,7 @@ namespace ariel{
 
         }
 
-        if (num_of_1_card == num_of_2_card && player1.stacksize() == 0)
+        else if (num_of_1_card == num_of_2_card && player1.stacksize() == 0)
         {
             cout << "DRAW ! with 0 - " << getFlage() << endl;
             int split = (getFlage() + 1)/2;
@@ -189,7 +186,7 @@ namespace ariel{
             
         }
         
-        if (num_of_1_card == num_of_2_card && player1.stacksize() == 1)
+        else if (num_of_1_card == num_of_2_card && player1.stacksize() == 1)
         {
             cout << "DRAW ! with 1 - " << getFlage() << endl;
             int split = (getFlage() + 1 + 2)/2;
