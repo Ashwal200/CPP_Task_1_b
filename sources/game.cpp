@@ -168,8 +168,6 @@ namespace ariel{
 
             addFlage();
 
-            cout << "DRAW ! - " << getFlage() << endl;
-
             // card to fight
             playTurn();
 
@@ -178,7 +176,6 @@ namespace ariel{
         else if (num_of_1_card == num_of_2_card && player1.stacksize() == 0)
         {
             draw_counter++;
-            cout << "DRAW ! with 0 - " << getFlage() << endl;
             int split = (getFlage() + 1)/2;
             player1.setCardesTaken_byValue(split);
             player2.setCardesTaken_byValue(split);
@@ -190,7 +187,6 @@ namespace ariel{
         else if (num_of_1_card == num_of_2_card && player1.stacksize() == 1)
         {
             draw_counter++;
-            cout << "DRAW ! with 1 - " << getFlage() << endl;
             int split = (getFlage() + 1 + 2)/2;
             player1.setCardesTaken_byValue(split);
             player2.setCardesTaken_byValue(split);
