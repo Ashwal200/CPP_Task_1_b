@@ -23,6 +23,7 @@ private:
     bool play_flage;
     vector<pair <Card, Card> > log;
     vector<Card> shuffle_pack; 
+    int draw_counter;
 public:
     // constructor
     Game(Player&, Player&);

@@ -27,7 +27,7 @@ namespace ariel{
             throw invalid_argument("Can't play on two games concurrency");
         }
 
-
+        draw_counter = 0;
         setFlage();
         play_flage = true;
         player1.setStatus();
@@ -162,7 +162,7 @@ namespace ariel{
         
         else if (num_of_1_card == num_of_2_card && player1.stacksize() > 1)
         {
-            
+            draw_counter++;
             // undercover card
             log.push_back(pair<Card, Card>(player1.getCard(), player2.getCard()));
 
@@ -177,6 +177,7 @@ namespace ariel{
 
         else if (num_of_1_card == num_of_2_card && player1.stacksize() == 0)
         {
+            draw_counter++;
             cout << "DRAW ! with 0 - " << getFlage() << endl;
             int split = (getFlage() + 1)/2;
             player1.setCardesTaken_byValue(split);
@@ -188,6 +189,7 @@ namespace ariel{
         
         else if (num_of_1_card == num_of_2_card && player1.stacksize() == 1)
         {
+            draw_counter++;
             cout << "DRAW ! with 1 - " << getFlage() << endl;
             int split = (getFlage() + 1 + 2)/2;
             player1.setCardesTaken_byValue(split);
@@ -304,8 +306,9 @@ namespace ariel{
     
     void Game::printStats()
     {
-        cout << "Game stats of " << player1.getName() << " :\n   win rate: " << player1.getWins_counter() <<"\n   cards won: "<< player1.cardesTaken() << "\n   draw wins: " << endl;
-        cout << "Game stats of " << player2.getName() << " :\n   win rate: " << player2.getWins_counter() <<"\n   cards won: "<< player2.cardesTaken() << "\n   draw wins: " << endl;
+        cout << "Game stats of " << player1.getName() << " :\n   win rate: " << player1.getWins_counter() <<"\n   cards won: "<< player1.cardesTaken() << endl;
+        cout << "Game stats of " << player2.getName() << " :\n   win rate: " << player2.getWins_counter() <<"\n   cards won: "<< player2.cardesTaken() << endl;
+        cout << "The number of Draws is : " << draw_counter << endl;
     }
 
    
